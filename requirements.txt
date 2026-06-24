@@ -1,0 +1,8 @@
+overpy
+pandas
+duckduckgo-search
+ddgs
+selenium
+webdriver-manager
+requests
+streamlit
