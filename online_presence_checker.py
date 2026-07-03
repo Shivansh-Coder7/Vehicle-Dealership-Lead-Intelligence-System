@@ -3,11 +3,9 @@ import pandas as pd
 from urllib.parse import urlparse
 import time
 
-
 data = pd.read_csv("businesses.csv")
 names = data["name"].dropna().astype(str).str.strip().tolist()
 names = [name for name in names if name]
-
 
 DIR_DOMAINS = {
     "google.com", "facebook.com", "instagram.com",
@@ -16,6 +14,8 @@ DIR_DOMAINS = {
     "reddit.com", "wikipedia.org", "yellowpages.in",
     "sulekha.com", "tradeindia.com", "youtube.com",
     "twitter.com", "linkedin.com", "magicpin.in",
+    "bikewale.com", "bikedekho.com", "zigwheels.com",
+    "team-bhp.com", "91wheels.com", "drivespark.com",
 }
 
 def clean_domain(url):
@@ -37,12 +37,12 @@ print("-" * 50)
 
 with DDGS() as ddgs:
     for i, name in enumerate(names):
-        query = f"{name} Indore car showroom"
+        query = f"{name} Indore vehicle showroom dealer"
         print(f"[{i+1}/{len(names)}] Searching: {name}")
 
         try:
             search_results = list(ddgs.text(query, max_results=5))
-            time.sleep(1)  
+            time.sleep(1)
         except Exception as e:
             print(f"  Error: {e}")
             search_results = []
@@ -70,7 +70,6 @@ with DDGS() as ddgs:
                 "type": classify_link(url),
             }
 
-            
             if official_link is None and domain not in DIR_DOMAINS:
                 official_link = link_row
                 continue
@@ -86,13 +85,12 @@ with DDGS() as ddgs:
             "relevant_links": relevant_links,
         })
 
-        print(f"  Website found: {'YES - ' + official_link['url'] if official_link else 'NO'}")
-
+        print(f"  Website: {'YES - ' + official_link['url'] if official_link else 'NO'}")
 
 results_df = pd.DataFrame(rows)
 results_df.to_csv("car_showroom_online_presence.csv", index=False)
 
 print("\n" + "=" * 50)
-print(f"Done! Saved {len(results_df)} records to car_showroom_online_presence.csv")
+print(f"Done! Saved {len(results_df)} records")
 print(f"  Has website: {results_df['has_website'].sum()}")
 print(f"  No website:  {(~results_df['has_website']).sum()}")
