@@ -121,7 +121,7 @@ The Streamlit dashboard provides:
 
 ## Live Demo
 
-(https://vehicle-dealership-lead-intelligence-system-8wexhpnkhebvvgxxpr.streamlit.app/)
+[https://vehicle-dealership-lead-intelligence-system-8wexhpnkhebvvgxxpr.streamlit.app/]
 
 ---
 
